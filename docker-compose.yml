@@ -8,7 +8,6 @@ services:
     environment:
       MYSQL_DATABASE: ${DB_NAME:-StudentRegistrationDB}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-toor}
-      MYSQL_USER: ${DB_USER:-root}
     ports:
       - "3307:3306"
     volumes:
