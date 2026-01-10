@@ -24,7 +24,7 @@ WORKDIR /app
 RUN npm install -g http-server
 
 # Copiar los archivos compilados desde la etapa de build
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/dist/student-registration-frontend ./dist
 
 # Exponer puerto
 EXPOSE 4200
@@ -33,5 +33,5 @@ EXPOSE 4200
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
   CMD wget -q --spider http://localhost:4200/ || exit 1
 
-# Comando de inicio
-CMD ["http-server", "dist", "-p", "4200", "--cors"]
+# Comando de inicio - usar --spa para Angular Router
+CMD ["http-server", "dist", "-p", "4200", "--cors", "--spa"]
