@@ -15,16 +15,21 @@ COPY . .
 # Build de la aplicación
 RUN npm run build
 
-# Etapa 2: Serve
-FROM node:18-alpine AS runtime
+# Etapa 2: Serve con Nginx
+FROM nginx:alpine
 
-WORKDIR /app
-
-# Instalar http-server para servir la aplicación
-RUN npm install -g http-server
+# Copiar archivo de configuración de Nginx
+RUN echo 'server { \
+  listen 4200; \
+  location / { \
+    root /usr/share/nginx/html; \
+    index index.html index.htm; \
+    try_files $uri $uri/ /index.html; \
+  } \
+}' > /etc/nginx/conf.d/default.conf
 
 # Copiar los archivos compilados desde la etapa de build
-COPY --from=build /app/dist/student-registration-frontend ./dist
+COPY --from=build /app/dist/student-registration-frontend /usr/share/nginx/html
 
 # Exponer puerto
 EXPOSE 4200
@@ -33,5 +38,5 @@ EXPOSE 4200
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
   CMD wget -q --spider http://localhost:4200/ || exit 1
 
-# Comando de inicio - usar --spa para Angular Router
-CMD ["http-server", "dist", "-p", "4200", "--cors", "--spa"]
+# Comando de inicio
+CMD ["nginx", "-g", "daemon off;"]
