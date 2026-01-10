@@ -28,8 +28,8 @@ RUN echo 'server { \
   } \
 }' > /etc/nginx/conf.d/default.conf
 
-# Copiar los archivos compilados desde la etapa de build
-COPY --from=build /app/dist/student-registration-frontend /usr/share/nginx/html
+# Copiar los archivos compilados desde la etapa de build (browser folder para SSR)
+COPY --from=build /app/dist/student-registration-frontend/browser /usr/share/nginx/html
 
 # Exponer puerto
 EXPOSE 4200
