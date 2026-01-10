@@ -1,0 +1,28 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Build results
+bin/
+obj/
+*.dll
+*.exe
+
+# IDE
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+ENVIRONMENT_SETUP.md

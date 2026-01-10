@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="classmates-container">
+    <h2>{{ t.classmates.title }}</h2>
+
+    <div *ngIf="student" class="student-info-panel">
+      <h3>{{ student.firstName }} {{ student.lastName }}</h3>
+      <p>{{ t.common.email }}: {{ student.email }}</p>
+      <p>{{ t.classmates.totalCredits }}: <strong>{{ student.totalCredits }}</strong></p>
+    </div>
+
+    <div *ngIf="loading" class="loading">{{ t.classmates.loadingClassmates }}</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <div *ngIf="!loading && !error && groupedClassmates.length > 0" class="subjects-list">
+      <div *ngFor="let group of groupedClassmates" class="subject-group">
+        <h3 class="subject-title">{{ group.subjectName }}</h3>
+        <p class="classmates-count">{{ group.classmates.length }} {{ t.classmates.classmatesCount }}</p>
+
+        <div class="classmates-grid">
+          <div *ngFor="let classmate of group.classmates" class="classmate-card">
+            <div class="classmate-name">
+              {{ classmate.firstName }} {{ classmate.lastName }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && !error && groupedClassmates.length === 0 && student" class="no-data">
+      <p>{{ t.classmates.noClassmatesFound }}</p>
+      <p *ngIf="student.inscriptions.length === 0">
+        {{ t.classmates.notEnrolledYet }}
+      </p>
+      <p *ngIf="student.inscriptions.length > 0">
+        {{ t.classmates.noClassmatesInSubjects }}
+      </p>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" (click)="goBack()">
+        {{ t.classmates.backToList }}
+      </button>
+    </div>
+  </div>
+</div>

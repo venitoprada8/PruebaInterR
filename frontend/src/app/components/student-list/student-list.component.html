@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="header">
+    <h1>{{ t.studentList.title }}</h1>
+    <button class="btn btn-primary" (click)="navigateToCreate()">
+      {{ t.studentList.newStudent }}
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">{{ t.studentList.loadingStudents }}</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error" class="student-grid">
+    <div class="student-card" *ngFor="let student of students">
+      <div class="student-info">
+        <h3>{{ student.firstName }} {{ student.lastName }}</h3>
+        <p class="email">{{ student.email }}</p>
+        <p class="credits">{{ t.studentList.totalCredits }}: <strong>{{ student.totalCredits }}</strong></p>
+      </div>
+      <div class="actions">
+        <button class="btn btn-sm btn-info" (click)="viewStudent(student.id)">
+          {{ t.common.view }}
+        </button>
+        <button class="btn btn-sm btn-secondary" (click)="editStudent(student.id)">
+          {{ t.common.edit }}
+        </button>
+        <button class="btn btn-sm btn-success" (click)="enrollStudent(student.id)">
+          {{ t.studentList.enroll }}
+        </button>
+        <button class="btn btn-sm btn-primary" (click)="viewClassmates(student.id)">
+          {{ t.studentList.classmates }}
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="deleteStudent(student.id)">
+          {{ t.common.delete }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && students.length === 0" class="no-data">
+    {{ t.studentList.noStudentsMessage }}
+  </div>
+</div>

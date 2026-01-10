@@ -1,0 +1,225 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.enrollment-container {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
+  margin-top: 0;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.student-info-panel {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+
+  h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+
+  p {
+    margin: 8px 0;
+    color: #555;
+
+    strong {
+      color: #007bff;
+    }
+  }
+
+  .enrolled-subjects {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #dee2e6;
+
+    h4 {
+      margin: 0 0 10px 0;
+      color: #495057;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+
+      li {
+        margin: 5px 0;
+        color: #666;
+      }
+    }
+  }
+}
+
+.loading, .error, .success, .no-data {
+  text-align: center;
+  padding: 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.subject-selection {
+  h3 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .info-text {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+}
+
+.subjects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.subject-card {
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+
+  &:hover:not(.disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    border-color: #007bff;
+  }
+
+  &.selected {
+    border-color: #28a745;
+    background: #f0fff4;
+
+    .selection-indicator .checkmark {
+      display: block;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .subject-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 15px;
+
+    h4 {
+      margin: 0;
+      color: #2c3e50;
+      flex: 1;
+    }
+
+    .subject-code {
+      background: #007bff;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+
+  .subject-info {
+    p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #666;
+
+      &.teacher {
+        font-weight: 500;
+      }
+
+      &.credits {
+        color: #007bff;
+      }
+    }
+  }
+
+  .selection-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    .checkmark {
+      display: none;
+      width: 30px;
+      height: 30px;
+      background: #28a745;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 30px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &.btn-primary {
+      background-color: #007bff;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: #0056b3;
+      }
+    }
+
+    &.btn-secondary {
+      background-color: #6c757d;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: #545b62;
+      }
+    }
+  }
+}

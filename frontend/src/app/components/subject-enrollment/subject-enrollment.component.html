@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="enrollment-container">
+    <h2>{{ t.enrollment.title }}</h2>
+
+    <div *ngIf="student" class="student-info-panel">
+      <h3>{{ student.firstName }} {{ student.lastName }}</h3>
+      <p>{{ t.common.email }}: {{ student.email }}</p>
+      <p>{{ t.enrollment.currentCredits }}: <strong>{{ student.totalCredits }}</strong> / 9</p>
+      <p>{{ t.enrollment.currentSubjects }}: <strong>{{ student.inscriptions.length }}</strong> / {{ MAX_SUBJECTS }}</p>
+
+      <div *ngIf="student.inscriptions.length > 0" class="enrolled-subjects">
+        <h4>{{ t.enrollment.alreadyEnrolledIn }}:</h4>
+        <ul>
+          <li *ngFor="let inscription of student.inscriptions">
+            {{ inscription.subjectName }} ({{ inscription.subjectCode }}) - {{ inscription.teacherName }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="loading">{{ t.common.loading }}</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="success" class="success">{{ success }}</div>
+
+    <div *ngIf="!loading && availableSubjects.length > 0" class="subject-selection">
+      <h3>{{ t.enrollment.selectSubjects }} ({{ selectedSubjects.size }} / {{ MAX_SUBJECTS }} selected)</h3>
+      <p class="info-text">
+        {{ t.enrollment.selectUpTo }} {{ MAX_SUBJECTS }} {{ t.enrollment.selectSubjects.toLowerCase() }}. {{ t.enrollment.cannotSelectSameTeacher }}.
+      </p>
+
+      <div class="subjects-grid">
+        <div
+          *ngFor="let subject of availableSubjects"
+          class="subject-card"
+          [class.selected]="isSelected(subject.id)"
+          [class.disabled]="!isSelected(subject.id) && !canSelectMore()"
+          (click)="toggleSubject(subject.id)"
+        >
+          <div class="subject-header">
+            <h4>{{ subject.name }}</h4>
+            <span class="subject-code">{{ subject.code }}</span>
+          </div>
+          <div class="subject-info">
+            <p class="teacher">{{ t.common.teacher }}: {{ subject.teacherName }}</p>
+            <p class="credits">{{ t.common.credits }}: {{ subject.credits }}</p>
+          </div>
+          <div class="selection-indicator">
+            <span *ngIf="isSelected(subject.id)" class="checkmark">✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!loading && availableSubjects.length === 0 && student" class="no-data">
+      <p>{{ t.enrollment.noSubjectsAvailable }}</p>
+      <p *ngIf="student.inscriptions.length >= MAX_SUBJECTS">
+        {{ t.enrollment.maxSubjectsReached }} {{ MAX_SUBJECTS }} {{ t.enrollment.selectSubjects.toLowerCase() }}.
+      </p>
+    </div>
+
+    <div class="actions">
+      <button
+        class="btn btn-primary"
+        [disabled]="selectedSubjects.size === 0 || loading"
+        (click)="enroll()"
+      >
+        {{ loading ? t.enrollment.enrolling : t.enrollment.enrollInSelected }}
+      </button>
+      <button class="btn btn-secondary" (click)="cancel()" [disabled]="loading">
+        {{ t.common.cancel }}
+      </button>
+    </div>
+  </div>
+</div>

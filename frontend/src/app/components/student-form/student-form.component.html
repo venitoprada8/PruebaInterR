@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="form-container">
+    <h2>{{ isEditMode ? t.studentForm.titleEdit : t.studentForm.titleNew }}</h2>
+
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="firstName">{{ t.studentForm.firstName }} *</label>
+        <input
+          type="text"
+          id="firstName"
+          formControlName="firstName"
+          class="form-control"
+          [class.invalid]="
+            studentForm.get('firstName')?.invalid &&
+            studentForm.get('firstName')?.touched
+          "
+        />
+        <div
+          class="error-message"
+          *ngIf="
+            studentForm.get('firstName')?.invalid &&
+            studentForm.get('firstName')?.touched
+          "
+        >
+          {{ t.studentForm.firstNameRequired }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">{{ t.studentForm.lastName }} *</label>
+        <input
+          type="text"
+          id="lastName"
+          formControlName="lastName"
+          class="form-control"
+          [class.invalid]="
+            studentForm.get('lastName')?.invalid &&
+            studentForm.get('lastName')?.touched
+          "
+        />
+        <div
+          class="error-message"
+          *ngIf="
+            studentForm.get('lastName')?.invalid &&
+            studentForm.get('lastName')?.touched
+          "
+        >
+          {{ t.studentForm.lastNameRequired }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">{{ t.studentForm.email }} *</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [class.invalid]="
+            studentForm.get('email')?.invalid &&
+            studentForm.get('email')?.touched
+          "
+        />
+        <div
+          class="error-message"
+          *ngIf="
+            studentForm.get('email')?.invalid &&
+            studentForm.get('email')?.touched
+          "
+        >
+          {{ t.studentForm.emailRequired }}
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="studentForm.invalid || loading"
+        >
+          {{ loading ? t.studentForm.saving : isEditMode ? t.studentForm.updating : t.studentForm.creating }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancel()"
+          [disabled]="loading"
+        >
+          {{ t.common.cancel }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

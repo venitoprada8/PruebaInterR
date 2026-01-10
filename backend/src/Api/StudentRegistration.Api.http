@@ -1,0 +1,104 @@
+@StudentRegistration.Api_HostAddress = http://localhost:5066
+@studentId = 00000000-0000-0000-0000-000000000000
+@subjectId = 00000000-0000-0000-0000-000000000000
+
+### ========== ESTUDIANTES ==========
+
+### Obtener todos los estudiantes
+GET {{StudentRegistration.Api_HostAddress}}/api/students
+Accept: application/json
+
+###
+
+### Obtener estudiante por ID
+GET {{StudentRegistration.Api_HostAddress}}/api/students/{{studentId}}
+Accept: application/json
+
+###
+
+### Crear nuevo estudiante
+POST {{StudentRegistration.Api_HostAddress}}/api/students
+Content-Type: application/json
+
+{
+  "firstName": "Juan",
+  "lastName": "Pérez",
+  "email": "juan.perez@example.com"
+}
+
+###
+
+### Actualizar estudiante
+PUT {{StudentRegistration.Api_HostAddress}}/api/students/{{studentId}}
+Content-Type: application/json
+
+{
+  "firstName": "Juan Carlos",
+  "lastName": "Pérez García",
+  "email": "juan.perez@example.com"
+}
+
+###
+
+### Eliminar estudiante
+DELETE {{StudentRegistration.Api_HostAddress}}/api/students/{{studentId}}
+
+###
+
+### Obtener compañeros de clase del estudiante
+GET {{StudentRegistration.Api_HostAddress}}/api/students/{{studentId}}/classmates
+Accept: application/json
+
+###
+
+### ========== ASIGNATURAS ==========
+
+### Obtener todas las asignaturas
+GET {{StudentRegistration.Api_HostAddress}}/api/subjects
+Accept: application/json
+
+###
+
+### Obtener asignatura por ID
+GET {{StudentRegistration.Api_HostAddress}}/api/subjects/{{subjectId}}
+Accept: application/json
+
+###
+
+### Obtener asignaturas disponibles para un estudiante
+GET {{StudentRegistration.Api_HostAddress}}/api/subjects/available/{{studentId}}
+Accept: application/json
+
+###
+
+### ========== INSCRIPCIONES ==========
+
+### Inscribir estudiante en asignaturas (máximo 3)
+POST {{StudentRegistration.Api_HostAddress}}/api/inscriptions
+Content-Type: application/json
+
+{
+  "studentId": "{{studentId}}",
+  "subjectIds": [
+    "{{subjectId}}"
+  ]
+}
+
+###
+
+### Desinscribir estudiante de una asignatura
+DELETE {{StudentRegistration.Api_HostAddress}}/api/inscriptions/{{studentId}}/subjects/{{subjectId}}
+
+###
+
+### Obtener inscripciones de un estudiante
+GET {{StudentRegistration.Api_HostAddress}}/api/inscriptions/students/{{studentId}}
+Accept: application/json
+
+###
+
+### Obtener estudiantes de una asignatura
+GET {{StudentRegistration.Api_HostAddress}}/api/inscriptions/subjects/{{subjectId}}/students
+Accept: application/json
+
+###
