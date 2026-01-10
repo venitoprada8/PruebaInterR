@@ -1,0 +1,16 @@
+**/.git
+**/.gitignore
+**/.dockerignore
+**/node_modules
+**/npm-debug.log
+**/README.md
+**/.env
+**/dist
+**/bin
+**/obj
+**/.vs
+**/.vscode
+**/node_modules
+**/.git
+**/test
+**/tests
