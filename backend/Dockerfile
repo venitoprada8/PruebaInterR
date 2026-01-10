@@ -29,7 +29,11 @@ WORKDIR /app
 # Copiar archivos publicados desde la etapa de build
 COPY --from=build /app/publish .
 
-# Exponer puerto (puedes cambiar según necesites)
+# Copiar script de entrada
+COPY backend/entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Exponer puerto
 EXPOSE 8080
 
 # Variables de entorno por defecto
@@ -41,4 +45,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
   CMD curl -f http://localhost:8080/health || exit 1
 
 # Comando de inicio
-ENTRYPOINT ["dotnet", "StudentRegistration.Api.dll"]
+ENTRYPOINT ["/app/entrypoint.sh"]
