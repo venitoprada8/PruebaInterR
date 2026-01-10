@@ -30,7 +30,7 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 # Copiar script de entrada
-COPY backend/entrypoint.sh /app/entrypoint.sh
+COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
 # Exponer puerto
