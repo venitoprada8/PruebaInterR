@@ -11,7 +11,7 @@ using StudentRegistration.Infrastructure.Data;
 namespace StudentRegistration.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260109160848_InitialCreate")]
+    [Migration("20260110231604_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,13 +22,13 @@ namespace StudentRegistration.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("StudentRegistration.Domain.Entities.Enrollment", b =>
+            modelBuilder.Entity("StudentRegistration.Domain.Entities.Inscription", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("EnrollmentDate")
+                    b.Property<DateTime>("InscriptionDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("StudentId")
@@ -44,7 +44,7 @@ namespace StudentRegistration.Infrastructure.Migrations
                     b.HasIndex("StudentId", "SubjectId")
                         .IsUnique();
 
-                    b.ToTable("Enrollments");
+                    b.ToTable("Inscriptions");
                 });
 
             modelBuilder.Entity("StudentRegistration.Domain.Entities.Student", b =>
@@ -266,16 +266,16 @@ namespace StudentRegistration.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("StudentRegistration.Domain.Entities.Enrollment", b =>
+            modelBuilder.Entity("StudentRegistration.Domain.Entities.Inscription", b =>
                 {
                     b.HasOne("StudentRegistration.Domain.Entities.Student", "Student")
-                        .WithMany("Enrollments")
+                        .WithMany("Inscriptions")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StudentRegistration.Domain.Entities.Subject", "Subject")
-                        .WithMany("Enrollments")
+                        .WithMany("Inscriptions")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -298,12 +298,12 @@ namespace StudentRegistration.Infrastructure.Migrations
 
             modelBuilder.Entity("StudentRegistration.Domain.Entities.Student", b =>
                 {
-                    b.Navigation("Enrollments");
+                    b.Navigation("Inscriptions");
                 });
 
             modelBuilder.Entity("StudentRegistration.Domain.Entities.Subject", b =>
                 {
-                    b.Navigation("Enrollments");
+                    b.Navigation("Inscriptions");
                 });
 
             modelBuilder.Entity("StudentRegistration.Domain.Entities.Teacher", b =>

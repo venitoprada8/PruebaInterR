@@ -76,12 +76,20 @@ var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "root";
 
 var connectionString = $"Server={dbServer};Port={dbPort};Database={dbName};User={dbUser};Password={dbPassword};";
 
-
+Console.WriteLine($"\n🔌 Connecting to Database:");
+Console.WriteLine($"   Server: {dbServer}");
+Console.WriteLine($"   Port:   {dbPort}");
+Console.WriteLine($"   User:   {dbUser}");
+Console.WriteLine($"   DB:     {dbName}\n");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     // Usar versión específica de MySQL (8.0) en lugar de AutoDetect
-    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 21)));
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 21)),
+        mySqlOptions => mySqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 5,
+            maxRetryDelay: TimeSpan.FromSeconds(5),
+            errorNumbersToAdd: null));
 });
 
 // Register Repositories
@@ -100,7 +108,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
     {
-        policy.WithOrigins("http://localhost:4200", "http://localhost:4201")
+        policy.WithOrigins("http://localhost:4200", "http://localhost:4201", "http://localhost:8080")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();

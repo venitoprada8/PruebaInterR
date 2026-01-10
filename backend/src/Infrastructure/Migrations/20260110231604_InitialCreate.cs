@@ -80,25 +80,25 @@ namespace StudentRegistration.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Enrollments",
+                name: "Inscriptions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     StudentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     SubjectId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    EnrollmentDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    InscriptionDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enrollments", x => x.Id);
+                    table.PrimaryKey("PK_Inscriptions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Enrollments_Students_StudentId",
+                        name: "FK_Inscriptions_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Enrollments_Subjects_SubjectId",
+                        name: "FK_Inscriptions_Subjects_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
@@ -136,14 +136,14 @@ namespace StudentRegistration.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_StudentId_SubjectId",
-                table: "Enrollments",
+                name: "IX_Inscriptions_StudentId_SubjectId",
+                table: "Inscriptions",
                 columns: new[] { "StudentId", "SubjectId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_SubjectId",
-                table: "Enrollments",
+                name: "IX_Inscriptions_SubjectId",
+                table: "Inscriptions",
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
@@ -174,7 +174,7 @@ namespace StudentRegistration.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Enrollments");
+                name: "Inscriptions");
 
             migrationBuilder.DropTable(
                 name: "Students");

@@ -19,7 +19,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copiar archivo de configuración de Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copiar los archivos compilados desde la etapa de build (browser folder para SSR)
 COPY --from=build /app/dist/student-registration-frontend/browser /usr/share/nginx/html

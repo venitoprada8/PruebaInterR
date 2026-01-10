@@ -38,7 +38,6 @@ EXPOSE 8080
 
 # Variables de entorno por defecto
 ENV ASPNETCORE_URLS=http://+:8080
-ENV DOTNET_ENVIRONMENT=Production
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
