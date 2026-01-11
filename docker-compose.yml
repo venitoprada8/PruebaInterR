@@ -48,14 +48,20 @@ services:
       dockerfile: Dockerfile
     container_name: student_registry_frontend
     environment:
-      API_URL: http://backend:8080
+      API_URL: /api
     ports:
-      - "8080:4200"
+      - "4200:4200"
     depends_on:
       - backend
     networks:
       - student_network
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`pruebalnterapidlsimo.dockploy.vpkbs.site`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
+      - "traefik.http.services.frontend.loadbalancer.server.port=4200"
 
 networks:
   student_network:
