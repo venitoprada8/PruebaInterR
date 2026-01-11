@@ -27,9 +27,10 @@ COPY --from=build /app/dist/student-registration-frontend/browser /usr/share/ngi
 # Exponer puerto
 EXPOSE 4200
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD wget -q --spider http://localhost:4200/ || exit 1
+# Health check disabled - wget not available in nginx:alpine
+# Service uses restart: unless-stopped in docker-compose for recovery
+# HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+#   CMD wget -q --spider http://localhost:4200/ || exit 1
 
 # Comando de inicio
 CMD ["nginx", "-g", "daemon off;"]

@@ -39,9 +39,10 @@ EXPOSE 8080
 # Variables de entorno por defecto
 ENV ASPNETCORE_URLS=http://+:8080
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-  CMD curl -f http://localhost:8080/health || exit 1
+# Health check disabled - curl not available in aspnet:8.0 runtime
+# Service uses restart: unless-stopped in docker-compose for recovery
+# HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+#   CMD curl -f http://localhost:8080/health || exit 1
 
 # Comando de inicio
 ENTRYPOINT ["/app/entrypoint.sh"]
